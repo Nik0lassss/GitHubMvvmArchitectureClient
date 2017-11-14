@@ -19,9 +19,6 @@ package com.chirkevich.nikola.githubmvvmarchitectureclient.data.model.api;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-/**
- * Created by amitshekhar on 07/07/17.
- */
 
 public class ApiError {
 
