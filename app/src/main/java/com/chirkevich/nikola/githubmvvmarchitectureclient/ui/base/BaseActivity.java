@@ -3,6 +3,7 @@ package com.chirkevich.nikola.githubmvvmarchitectureclient.ui.base;
 import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Build;
@@ -11,6 +12,12 @@ import android.support.annotation.IdRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+
+
+import com.chirkevich.nikola.githubmvvmarchitectureclient.utils.CommonUtils;
+import com.chirkevich.nikola.githubmvvmarchitectureclient.utils.NetworkUtils;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 
@@ -59,12 +66,54 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
     @TargetApi(Build.VERSION_CODES.M)
     public void requestPermissionSafely(String[] permissions, int requestCode) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(permissions,requestCode);
+            requestPermissions(permissions, requestCode);
         }
     }
 
     @TargetApi(Build.VERSION_CODES.M)
-    public boolean gasPermission
+    public boolean hasPermissionSafely(String persmission) {
+        return Build.VERSION.SDK_INT < Build.VERSION_CODES.BASE ||
+                checkSelfPermission(persmission) == PackageManager.PERMISSION_GRANTED;
+    }
+
+    @Override
+    public void onFragmentAttached() {
+
+    }
+
+    @Override
+    public void onFragmentDetached(String tag) {
+
+    }
+
+    public void hideKeyboard() {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
+    public void openActivityOnTOkenExpire() {
+        //startActivity() LoginActivity
+        finish();
+    }
+
+    public boolean isNetworkConnected() {
+        return NetworkUtils.isNetworkConnected(getApplicationContext());
+    }
+
+    public void showLoading() {
+        hideLoading();
+        progressDialog = CommonUtils.showLoadingDialog(this);
+    }
+
+
+    public void hideLoading() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.cancel();
+        }
+    }
 
     @Override
     protected void onDestroy() {

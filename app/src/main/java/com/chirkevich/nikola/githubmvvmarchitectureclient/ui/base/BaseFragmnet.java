@@ -53,14 +53,20 @@ public abstract class BaseFragmnet<T extends ViewDataBinding, V extends BaseView
         {
             BaseActivity activity = (BaseActivity) context;
             this.baseActivity = activity;
-            baseActivity.onFra
+            baseActivity.onFragmentAttached();
 
         }
     }
 
     @Override
     public void onDetach() {
+        baseActivity = null;
         super.onDetach();
+    }
+
+    public BaseActivity getBaseActivity()
+    {
+        return baseActivity;
     }
 
 
