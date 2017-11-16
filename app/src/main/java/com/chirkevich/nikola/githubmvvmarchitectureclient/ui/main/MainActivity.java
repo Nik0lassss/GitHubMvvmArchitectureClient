@@ -1,7 +1,9 @@
-package com.chirkevich.nikola.githubmvvmarchitectureclient;
+package com.chirkevich.nikola.githubmvvmarchitectureclient.ui.main;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.chirkevich.nikola.githubmvvmarchitectureclient.R;
 
 public class MainActivity extends AppCompatActivity {
 

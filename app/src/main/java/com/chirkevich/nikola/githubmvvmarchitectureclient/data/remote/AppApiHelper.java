@@ -16,6 +16,6 @@ import io.reactivex.Observable;
 public class AppApiHelper implements ApiHelper {
     @Override
     public Observable<UserResponse> doGitHubGetUserCall(UserRequest.GitHubLoginRequest request) {
-        return null;
+        return Rx2AndroidNetworking.get(ApiEndPoint.ENDPOINT_GIT_HUB_USER).addPathParameter(request).build().getObjectObservable(UserResponse.class);
     }
 }
